@@ -1,5 +1,7 @@
 package com.example.TMDB_CLI.service;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -8,17 +10,20 @@ import reactor.core.publisher.Mono;
 public class MovieService {
 
     private final WebClient webClient;
+    private final String token;
 
-    public MovieService(WebClient webClient){
+    public MovieService(WebClient webClient, @Value("${tmdb.api.token}")String token){
         this.webClient = webClient;
+        this.token = token;
     }
 
+    //Read
     public Mono<String> fetchMovies(String argument){
         String endpoint = getEndpointArgument(argument);
-        String url =  "https://api.themoviedb.org/3/" + endpoint + "?api_key=YOUR_API_KEY";
 
         return webClient.get()
-                .uri(url)
+                .uri(endpoint)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer "+ token)
                 .retrieve()
                 .bodyToMono(String.class);
     }

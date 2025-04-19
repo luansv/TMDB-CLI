@@ -7,11 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/movies")
 public class TmdbCliController {
-
-    @Autowired
-    private WebClient.Builder webClientBuilder;
 
     @Autowired
     private MovieService tmdbCliService;

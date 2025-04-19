@@ -3,7 +3,6 @@ package com.example.TMDB_CLI.runner;
 import com.example.TMDB_CLI.service.MovieService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.juli.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -38,8 +37,8 @@ public class MovieCliRunner implements CommandLineRunner {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(jsonResponse);
             JsonNode results = rootNode.path("results");
-
             System.out.println("\n🎬 Movie List (" + argument + "):\n");
+
             for (JsonNode movie : results) {
                 String title = movie.path("title").asText();
                 double rating = movie.path("vote_average").asDouble();
